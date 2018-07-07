@@ -1,7 +1,9 @@
 package com.tattva.api.person;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyManagementException;
@@ -81,7 +83,7 @@ public class savePeronInfo {
 
 			// dump all the content
 
-			 jsondata= new Commontrust().print_content(conn);
+			 jsondata=print_content(conn);
 
 			
 		} catch (MalformedURLException e) {
@@ -105,5 +107,62 @@ public class savePeronInfo {
 
 	}
 
+	
+	public JSONObject print_content(HttpsURLConnection con) {
+		JSONObject jsonObj =null;
+		if (con != null) {
+			BufferedReader reader = null;
+			try {
+
+				System.out.println("****** Content of the URL ********");
+
+				System.out.println("conenction------>>"+con);
+					    
+			System.out.println("InputStream  --->>>"+con.getResponseCode());
+		
+			
+			if(con.getResponseCode() == 200)
+			{
+			reader = new BufferedReader(new	InputStreamReader(con.getInputStream()));
+			}
+			else
+			{
+			reader = new BufferedReader(new	InputStreamReader(con.getInputStream()));
+			}
+			
+			 BufferedReader br = new BufferedReader(reader);	
+				
+			 
+					String input,str="";
+					System.out.println("****** print_content  while start ********");
+					while ((input = br.readLine()) != null) {
+	
+						str+=str+input;
+	
+					}
+				
+					if(str.length()>5)
+					   jsonObj = new JSONObject(str);
+					
+					
+					System.out.println("json Response --->>"+jsonObj);
+				System.out.println("****** print_content  method end ********");
+
+				br.close();
+
+			} catch (IOException e) {
+
+				e.printStackTrace();
+
+			}
+
+		}
+		
+		return jsonObj;
+
+	}
+
+	
+	
 	
 }

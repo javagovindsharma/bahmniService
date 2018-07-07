@@ -15,6 +15,7 @@ import javax.net.ssl.TrustManager;
 import org.json.JSONObject;
 import com.tattva.api.Commontrust;
 import com.tattva.api.person.PersonApi;
+import com.tattva.api.person.savePeronInfo;
 
 public class PatientBasicInfo {
 
@@ -82,7 +83,7 @@ public class PatientBasicInfo {
 
 			// dump all the content
 
-			 jsondata= new Commontrust().print_content(conn);
+			 jsondata= new savePeronInfo().print_content(conn);
 
 			
 		} catch (MalformedURLException e) {

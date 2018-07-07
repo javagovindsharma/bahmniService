@@ -24,7 +24,7 @@ public class GetAllPatientAPI {
 	
 	public static String IP="13.232.102.174";
 	
-	public String locUUID="baf7bd38-d225-11e4-9c67-080027b662ec";//"37a22a24-f6d9-4d80-af2f-2bd120362625";    //
+	public String locUUID="37a22a24-f6d9-4d80-af2f-2bd120362625";   // "baf7bd38-d225-11e4-9c67-080027b662ec";
 	
 	public String Prod_UUID="c1c26908-3f10-11e4-adec-0800271c1b75";//"740f25e3-b250-4b7b-9553-0c93831d36e1";   //
 	
@@ -82,7 +82,7 @@ public class GetAllPatientAPI {
 			 jsondata=new Commontrust().print_contentbyArary(conn);
 				
 			 
-			 System.out.println(getClass()+"JSONDATA"+jsondata);
+			 System.out.println(getClass()+"JSONDATA**************>>>"+jsondata);
 			
 		} catch (MalformedURLException e) {
 

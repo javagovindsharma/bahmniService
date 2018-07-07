@@ -82,7 +82,7 @@ public class savePeronAddress {
 
 			// dump all the content
 
-			 jsondata= new Commontrust().print_content(conn);
+			 jsondata= new savePeronInfo().print_content(conn);
 
 			
 		} catch (MalformedURLException e) {

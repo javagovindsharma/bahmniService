@@ -26,6 +26,7 @@ import com.tattva.api.patient.PatientSaveDisposition;
 import com.tattva.api.patient.PatientSaveDrugs;
 import com.tattva.api.patient.PatientSaveObservation;
 import com.tattva.api.patient.PatientSaveOrders;
+import com.tattva.api.patient.StartPatientVisit;
 import com.tattva.api.person.PersonApi;
 import com.tattva.api.person.getPersonDataByUUID;
 import com.tattva.api.person.savePeronAddress;
@@ -70,6 +71,8 @@ public class PersonController extends HttpServlet {
 			saveDiagnosis(req, resp);
 		} else if (method.equalsIgnoreCase("saveOrders")) {
 			saveOrders(req, resp);
+		}else if (method.equalsIgnoreCase("startVisits")) {
+			startVisits(req, resp);
 		}else {
 			resp.getWriter().write("wrong url");
 		}
@@ -83,7 +86,9 @@ public class PersonController extends HttpServlet {
 		resp.getWriter().write(data.toString());
 
 	}
-
+//method=getBasicInfo&&givenname=govind&middlename=kumar&familyname=pooja&gender=M&age-30&mobileNo=9087654321&state=UttarPradesh&district=Lucknow&tehsil=Nishatganj&gram=new Hyderbad&village=Tattva
+	
+	
 	private void getPersonBasicInfo(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
 		String age = req.getParameter("age");
@@ -191,6 +196,7 @@ public class PersonController extends HttpServlet {
 
 		Random rand = new Random();
 		int num = rand.nextInt(90000000) + 10000000;
+		
 		String jsonIdentifier = "{ \"identifiers\": [{ \"identifier\":\"" + num + "\", "
 				+ "\"identifierType\":\"81433852-3f10-11e4-adec-0800271c1b75\", "
 				+ "\"location\":\"baf7bd38-d225-11e4-9c67-080027b662ec\", " + "\"preferred\": true }], "
@@ -200,7 +206,12 @@ public class PersonController extends HttpServlet {
 
 		new PatientBasicInfo().testIt(jsonIdentifier);
 
-		resp.getWriter().write(respp.toString());
+		JSONObject jsonpatientRecord = new JSONObject();
+		jsonpatientRecord = new StartPatientVisit().visitStared(String.valueOf(num));
+
+		System.out.println(getClass() + "  jsonpatientRecord " + jsonpatientRecord);
+		
+		resp.getWriter().write(jsonpatientRecord.toString());
 
 	}
 
@@ -245,7 +256,7 @@ public class PersonController extends HttpServlet {
 	}
 
 	public void getAllPatient(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
+		JSONArray jsonArrayResp=new JSONArray();
 		JSONObject jsonpatientRecord = null;
 		JSONArray jsondata = new GetAllPatientAPI().getallPatientDetails();
 
@@ -257,10 +268,10 @@ public class PersonController extends HttpServlet {
 			String uuid = objects.getString("uuid");
 			System.out.println(getClass() + "  UUID-->>" + uuid);
 			jsonpatientRecord = new GetPatientByUUID().getPatientByUUID(uuid);
-
+			jsonArrayResp.put(jsonpatientRecord);
 		}
 
-		resp.getWriter().write(jsonpatientRecord.toString());
+		resp.getWriter().write(jsonArrayResp.toString());
 
 	}// getAllPatient close
 
@@ -386,5 +397,20 @@ public class PersonController extends HttpServlet {
 		resp.getWriter().write(jsonpatientRecord.toString());
 
 	}// saveDiagnosis close
+	
+	
+	public void startVisits(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+		JSONObject jsonpatientRecord = new JSONObject();
+
+		jsonpatientRecord = new StartPatientVisit().visitStared("GAN203014");
+
+		System.out.println(getClass() + "  jsonpatientRecord " + jsonpatientRecord);
+
+		resp.getWriter().write(jsonpatientRecord.toString());
+
+	}// startVisits close
+	
+	
 
 }
